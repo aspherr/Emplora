@@ -1,11 +1,20 @@
-const App = () => {
-  return (
-    <div data-theme="light" className="flex items-center justify-center h-screen">
-      <button className="text-xl font-bold btn btn-primary btn-outline">
-        click me
-      </button>
-    </div>
-  );
-};
+import React from 'react'
+import { Routes, Route } from "react-router"
 
-export default App;
+import LoginPage from "./pages/loginPage"
+import Footer from './components/footer'
+
+function App() {
+  return (
+    <div>
+      <Routes>
+        <Route path='/' element={<LoginPage />} />
+      </Routes>
+      
+      <Footer />
+    </div>
+  )
+}
+
+export default App
+
