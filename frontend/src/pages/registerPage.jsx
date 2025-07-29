@@ -1,8 +1,15 @@
 import React from 'react'
 import toast from 'react-hot-toast'
 import Navbar from '../components/navbar'
+import { useNavigate } from 'react-router'
 
 const RegisterPage = () => {
+
+  const navigate = useNavigate();
+  const handleLoginRoute = () => {
+    navigate('/');
+  } 
+
   return (
     <div data-theme="light" className=''>
       <Navbar />
@@ -26,8 +33,15 @@ const RegisterPage = () => {
                     type="text"
                     required
                     placeholder="Full Name"
+                    pattern="[A-Za-z]*"
+                    minlength="1"
+                    maxlength="256"
                   />
                 </label>
+
+                <p className="validator-hint hidden">
+                  Please enter your full name
+                </p>
               </div>
 
               <div>
@@ -101,7 +115,7 @@ const RegisterPage = () => {
               </div>
 
               <div className="flex items-center justify-center">
-                <button className="btn btn-link text-sm px-0">
+                <button onClick={handleLoginRoute} className="btn btn-link text-sm px-0" type='button'>
                   Already have an account? Login here
                 </button>
               </div>

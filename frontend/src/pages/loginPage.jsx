@@ -1,8 +1,15 @@
 import React from 'react'
 import toast from 'react-hot-toast'
 import Navbar from '../components/navbar'
+import { useNavigate } from 'react-router'
 
 const LoginPage = () => {
+
+  const navigate = useNavigate();
+  const handleRegRoute = () => {
+    navigate('/register');
+  } 
+  
   return (
     <div data-theme="light" className=''>
       <Navbar />
@@ -58,11 +65,10 @@ const LoginPage = () => {
                   <span className="text-sm">Remember Me</span>
                 </label>
 
-                <button className="btn btn-link text-sm px-0">
+                <button className="btn btn-link text-sm px-0" type='button'>
                   Forgot Password?
                 </button>
               </div>
-
 
               <div className=''>
                 <button type="submit" className="btn btn-accent w-full">
@@ -71,7 +77,7 @@ const LoginPage = () => {
               </div>
 
               <div className="flex items-center justify-center">
-                <button className="btn btn-link text-sm px-0">
+                <button onClick={handleRegRoute} className="btn btn-link text-sm px-0" type="button">
                   Don't have an account? Register here
                 </button>
               </div>
