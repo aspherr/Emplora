@@ -1,9 +1,10 @@
 import React from 'react'
 import { Routes, Route } from "react-router"
+import Footer from './components/footer'
 
 import LoginPage from "./pages/loginPage"
 import RegisterPage from "./pages/registerPage"
-import Footer from './components/footer'
+import DashboardPage from './pages/dashboardPage'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path='/' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
+        <Route path='/dashboard' element={<DashboardPage />} />
       </Routes>
       
       <Footer />
