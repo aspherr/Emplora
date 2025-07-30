@@ -11,7 +11,7 @@ const LoginPage = () => {
   } 
   
   return (
-    <div data-theme="light" className=''>
+    <div data-theme="light">
       <Navbar />
 
       <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-base-200">
