@@ -3,6 +3,7 @@ import axios from "axios";
 
 import Navbar from '../components/navbar'
 import RecordCard from '../components/recordCard';
+import GenderSelector from '../components/genderSelector';
 
 const DashboardPage = () => {
   const [records, setRecords] = useState([]);
@@ -29,7 +30,7 @@ const DashboardPage = () => {
           <div className="flex gap-5 ml-28">
             
             {/* Records list */}
-            <div className="max-w-3xl w-full text-left h-[500px] overflow-y-auto space-y-4">
+            <div className="max-w-3xl w-full text-left h-[600px] overflow-y-auto space-y-4">
               {records.length > 0 ? (
                 records.map((record) => (
                   <RecordCard key={record._id} record={record} />
@@ -41,16 +42,6 @@ const DashboardPage = () => {
 
             {/* Search bar */}
             <div className="w-1/3 space-y-5">
-              <label className="input w-full ml-10">
-                <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.3-4.3"></path>
-                  </g>
-                </svg>
-                <input type="search" className="grow" placeholder="Search" />
-              </label>
-
               <div className="w-full max-w-md p-8 bg-white rounded-xl border mb-20 ml-10">
                 <form className="space-y-4">
                   <div>
@@ -117,21 +108,40 @@ const DashboardPage = () => {
                     </label>
                   </div>
 
-                  <div className='flex items-center gap-3'>
-                    <input type="text" placeholder="Manager" className="input w-70 min-w-0" disabled />
-                    <div className="dropdown">
-                      <div tabIndex={0} role="button" className="btn m-0 whitespace-nowrap px-4">Select</div>
-                        <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-100">
-                          <li><a>Item 1</a></li>
-                          <li><a>Item 2</a></li>
-                          <li><a>Item 3</a></li>
-                        </ul>
-                    </div>
+                  <div>
+                    <GenderSelector />
+                  </div>
+
+                  <div className="form-control w-full max-w-sm">
+                    <label className="flex items-center gap-3 input input-bordered w-full">
+                      <span className="text-gray-400">DOB</span>
+                      <input 
+                        type="date" 
+                        className="w-full" 
+                        required 
+                      />
+                    </label>
+                  </div>
+
+
+                  <div>
+                    <label className="input validator w-full">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="h-[1em] opacity-50">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                      </svg>
+
+                      <input
+                        type="text"
+                        placeholder="Address"
+                        className="w-full"
+                        required
+                      />
+                    </label>
                   </div>
 
                   <div className='flex items-center gap-3'>
-                    <input type="text" placeholder="Department" className="input w-70 min-w-0" disabled />
-                    <div className="dropdown">
+                    <input type="text" placeholder="Manager" className="input w-70 min-w-0" disabled />
+                    <div className="dropdown dropdown-bottom dropdown-end">
                       <div tabIndex={0} role="button" className="btn m-0 whitespace-nowrap px-4">Select</div>
                         <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
                           <li><a>Item 1</a></li>
@@ -141,7 +151,19 @@ const DashboardPage = () => {
                     </div>
                   </div>
 
-                  <div className=''>
+                  <div className='flex items-center gap-3'>
+                    <input type="text" placeholder="Department" className="input w-70 min-w-0" disabled />
+                    <div className="dropdown dropdown-bottom dropdown-end">
+                      <div tabIndex={0} role="button" className="btn m-0 whitespace-nowrap px-4">Select</div>
+                        <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
+                          <li><a>Item 1</a></li>
+                          <li><a>Item 2</a></li>
+                          <li><a>Item 3</a></li>
+                        </ul>
+                    </div>
+                  </div>
+
+                  <div className='w-full'>
                     <button type="submit" className="btn btn-accent w-full">
                       Create Employee
                     </button>
