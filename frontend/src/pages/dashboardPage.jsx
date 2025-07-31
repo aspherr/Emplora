@@ -26,12 +26,6 @@ const DashboardPage = () => {
         <Navbar />
 
         <div className="min-h-[calc(100vh-64px)] bg-base-200 px-10 py-10">
-          <div className='mb-10 ml-28'>
-            <span className='font-bold text-4xl'>
-              Hey User
-            </span>
-          </div>
-
           <div className="flex gap-5 ml-28">
             
             {/* Records list */}
