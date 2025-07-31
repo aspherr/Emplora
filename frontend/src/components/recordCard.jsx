@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Status from "./status";
+
 const RecordCard = ({record}) => {
   return (
     <div key={record.id} className="bg-white border rounded shadow p-4 h-32 relative">
@@ -9,18 +11,7 @@ const RecordCard = ({record}) => {
       </div>
 
       <div className='flex flex-row items-center gap-4 text-xs font-mono'>
-        <div className='≈ bg-base-200 rounded item-center justify-center p-2 mt-2'>
-          <span className={` ${ record.status === 'active'
-          ? 'text-green-600'
-          : record.status === 'on leave'
-          ? 'text-yellow-500'
-          : record.status === 'terminated'
-          ? 'text-red-600'
-          : 'text-gray-500'
-          }`}>
-            {record.status}
-          </span>
-        </div>
+        <Status key={record._id} record={record} />
 
         <div className='flex bg-base-200 rounded item-center justify-center p-2 w mt-2'>
           {record.email}
@@ -50,19 +41,7 @@ const RecordCard = ({record}) => {
             <div className='space-y-1'>
               <div className='flex flex-row items-center gap-5 text-xs font-mono'>
                 <h1 className='font-bold text-3xl'>{record.name}</h1>
-
-                <div className='≈ bg-base-200 rounded item-center justify-center p-2'>
-                  <span className={` ${ record.status === 'active'
-                  ? 'text-green-600'
-                  : record.status === 'on leave'
-                  ? 'text-yellow-500'
-                  : record.status === 'terminated'
-                  ? 'text-red-600'
-                  : 'text-gray-500'
-                  }`}>
-                    {record.status}
-                  </span>
-                </div>
+                <Status key={record._id} record={record} />
               </div>
               <h3 className='font-sembold font-mono text-sm opacity-50'>{record.title} • {record._id}</h3>
             </div>
