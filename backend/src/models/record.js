@@ -13,7 +13,22 @@ const recordSchema = new mongoose.Schema({
 
     phone: {
         type: String,
-        required: false
+        required: true
+    },
+
+    gender: {
+        type: String,
+        required: true
+    },
+
+    dob: {
+        type: Date,
+        required: true
+    },
+
+    address: {
+        type: String,
+        required: true
     },
 
     department: {
@@ -21,7 +36,7 @@ const recordSchema = new mongoose.Schema({
         required: true
     },
 
-    title: {
+    role: {
         type: String,
         required: true
     },
@@ -33,6 +48,11 @@ const recordSchema = new mongoose.Schema({
 
     status: {
         type: String,
+        required: true
+    },
+
+    isManager: {
+        type: Boolean,
         required: true
     }
 
