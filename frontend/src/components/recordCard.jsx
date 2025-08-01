@@ -19,7 +19,7 @@ const RecordCard = ({record}) => {
       </div>
       
       <div className="absolute top-3 right-3">
-        <button className='btn p-2' onClick={()=>document.getElementById('my_modal_3').showModal()}>
+        <button className='btn p-2' onClick={()=>document.getElementById(`modal_${record._id}`).showModal()}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5 opacity-50 hover:opacity-100 cursor-pointer transition"
@@ -32,7 +32,7 @@ const RecordCard = ({record}) => {
           </svg>
         </button>
         
-        <dialog id="my_modal_3" className="modal">
+        <dialog id={`modal_${record._id}`} className="modal">
           <div className="modal-box">
             <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
