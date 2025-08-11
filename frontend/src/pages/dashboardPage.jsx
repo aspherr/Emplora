@@ -22,9 +22,20 @@ const DashboardPage = () => {
     fetchRecords();
   }, []);
 
+
+  const [recordToDelete, setRecordToDelete] = useState(null);
+  const handleDeleteClick = (id) => {
+    setRecordToDelete(id);
+  };
+
+  const confirmDelete = async () => {
+    await deleteRecord(recordToDelete);
+    setRecordToDelete(null);
+  };
+  
+
   const [successMsg, setSuccessMsg] = useState("");
   const deleteRecord = async (id) => {
-    
     try {
       await axios.delete(`http://localhost:3000/api/records/${id}`);
       setRecords(prev => prev.filter(r => r._id !== id));
@@ -61,9 +72,27 @@ const DashboardPage = () => {
     <div>
         <Navbar />
 
+        {recordToDelete && (
+          <dialog id="confirmDeleteModal" className="modal modal-open">
+            <div className="modal-box">
+              <h3 className="font-bold text-lg">Are you sure?</h3>
+              <p className="py-4">This action cannot be undone.</p>
+              <div className="modal-action">
+                <button className="btn btn-error" onClick={confirmDelete}>
+                  Confirm
+                </button>
+                
+                <button className="btn" onClick={() => setRecordToDelete(null)}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </dialog>
+        )}
+
         {successMsg && (
           <div className="toast toast-top toast-end">
-            <div role="alert" className="alert alert-success">
+            <div role="alert" className="alert alert-success alert-soft">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -79,7 +108,7 @@ const DashboardPage = () => {
             <div className="max-w-3xl w-full text-left h-[600px] overflow-y-auto space-y-4">
               {records.length > 0 ? (
                 records.map((record) => (
-                  <RecordCard key={record._id} record={record} onDelete={() => deleteRecord(record._id)} />
+                  <RecordCard key={record._id} record={record} onDelete={() => handleDeleteClick(record._id)} />
                 ))
               ) : (
                 <p className="text-gray-500">No records found.</p>
