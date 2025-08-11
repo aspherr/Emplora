@@ -22,6 +22,20 @@ const DashboardPage = () => {
     fetchRecords();
   }, []);
 
+  const [successMsg, setSuccessMsg] = useState("");
+  const deleteRecord = async (id) => {
+    
+    try {
+      await axios.delete(`http://localhost:3000/api/records/${id}`);
+      setRecords(prev => prev.filter(r => r._id !== id));
+      setSuccessMsg("Record has been deleted successfully!");
+      setTimeout(() => setSuccessMsg(""), 3000);
+
+    } catch (error) {
+      console.error(`Error deleting record ID: ${id}`, error);
+    }
+  };
+
   const [selectedDept, setSelectedDept] = useState("");
   const departments = [
     "Human Resources",
@@ -47,6 +61,17 @@ const DashboardPage = () => {
     <div>
         <Navbar />
 
+        {successMsg && (
+          <div className="toast toast-top toast-end">
+            <div role="alert" className="alert alert-success">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{successMsg}</span>
+            </div>
+          </div>
+        )}
+
         <div className="min-h-[calc(100vh-64px)] bg-base-200 px-10 py-10">
           <div className="flex gap-5 ml-28">
             
@@ -54,7 +79,7 @@ const DashboardPage = () => {
             <div className="max-w-3xl w-full text-left h-[600px] overflow-y-auto space-y-4">
               {records.length > 0 ? (
                 records.map((record) => (
-                  <RecordCard key={record._id} record={record} />
+                  <RecordCard key={record._id} record={record} onDelete={() => deleteRecord(record._id)} />
                 ))
               ) : (
                 <p className="text-gray-500">No records found.</p>
@@ -179,7 +204,7 @@ const DashboardPage = () => {
                         <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
                           {departments.map((dept, idx) => (
                             <li key={idx}>
-                              <a onClick={() => (dept)}>{dept}</a>
+                              <a onClick={() => setSelectedDept(dept)}>{dept}</a>
                             </li>
                           ))}
                         </ul>
