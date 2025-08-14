@@ -82,6 +82,10 @@ const DashboardPage = () => {
     };
   };
 
+  const handleStatusChange = (id, newStatus) => {
+    setRecords(prev => prev.map(r => r._id === id ? { ...r, status: newStatus } : r));
+  };
+
   const [selectedDept, setSelectedDept] = useState("");
   const departments = [
     "Human Resources",
@@ -143,7 +147,7 @@ const DashboardPage = () => {
             <div className="max-w-3xl w-full text-left h-[600px] overflow-y-auto space-y-4">
               {records.length > 0 ? (
                 records.map((record) => (
-                  <RecordCard key={record._id} record={record} onDelete={() => handleDeleteClick(record._id)} />
+                  <RecordCard key={record._id} record={record} onDelete={() => handleDeleteClick(record._id)} onStatusChange={handleStatusChange} />
                 ))
               ) : (
                 <p className="text-gray-500">No records found.</p>

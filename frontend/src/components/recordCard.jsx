@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from "axios";
 
 import Status from "./status";
 
-const RecordCard = ({record, onDelete}) => {
+const RecordCard = ({record, onDelete, onStatusChange}) => {
   const detailsId = `modal_${record._id}`;
+
+    const statuses = [
+      "Active",
+      "On-Leave",
+      "Terminated"
+    ];
+
+    const updateStatus = async (id, updatedStatus) => {
+      try {
+        await axios.put(`http://localhost:3000/api/records/${id}`, {status: updatedStatus});
+        onStatusChange?.(id, updatedStatus);
+  
+      } catch (error) {
+        console.error(`Error updating status for record ID: ${id}`, error);
+      }
+    };
   
   return (
     <div key={record.id} className="bg-white border rounded shadow p-4 h-32 relative">
@@ -115,11 +132,21 @@ const RecordCard = ({record, onDelete}) => {
             </div>
 
             <div className='flex flex-row items-center gap-4 mt-10'>
-              <button className='btn btn-accent'>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-[1em] opacity-50">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/>
-                </svg>
-                Update Status
+              <button className="dropdown dropdown-top btn-accent">
+                <label tabIndex={0} className="btn m-0 whitespace-nowrap px-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-[1em] opacity-50">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/>
+                  </svg>
+                  Update Status
+                </label>
+                
+                <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32 text-sm font-semibold">
+                  {statuses.map((status, idx) => (
+                    <li key={idx}>
+                      <a onClick={() => updateStatus(record._id, status)}>{status}</a>
+                    </li>
+                  ))}
+                </ul>
               </button>
 
               <button className='btn btn-accent'>
