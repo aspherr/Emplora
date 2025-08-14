@@ -28,10 +28,10 @@ export async function getRecordById(req, res) {
 export async function createRecord(req, res) {
     try {
 
-        const {name, email, phone, department, title, managerID, status} = req.body;
-        const newRecord = new Record({name, email, phone, department, title, managerID, status})
+        const {name, email, phone, gender, dob, address, department, role, manager, status, isManager} = req.body;
+        const newRecord = new Record({name, email, phone, gender, dob, address, department, role, manager, status, isManager})
         await newRecord.save();
-        res.status(201).json({ message: "record created successfully" });
+        res.status(201).json(newRecord);
 
     } catch (error) {
         console.error("Error in POST records controller: ", error);

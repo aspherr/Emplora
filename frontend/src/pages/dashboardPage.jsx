@@ -35,6 +35,7 @@ const DashboardPage = () => {
   
 
   const [successMsg, setSuccessMsg] = useState("");
+
   const deleteRecord = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/api/records/${id}`);
@@ -45,6 +46,40 @@ const DashboardPage = () => {
     } catch (error) {
       console.error(`Error deleting record ID: ${id}`, error);
     }
+  };
+
+  const createRecord = async (form) => {
+    form.preventDefault();
+
+    const payload = {
+      name: form.target.name.value.trim(),
+      email: form.target.email.value.trim(),
+      phone: form.target.phone.value.trim(),
+      gender: form.target.gender.value,
+      dob: form.target.dob.value,
+      address: form.target.address.value.trim(),
+      manager: selectedManager,
+      status: "active",
+      role: form.target.role.value.trim(),
+      department: selectedDept,
+      isManager: form.target.isManager.checked
+    };
+
+    try {
+      const res = await axios.post("http://localhost:3000/api/records", payload);
+      const created = res.data?.record ?? res.data;
+      setRecords(prev => [created, ...prev]);
+
+      form.target.reset();
+      setSelectedDept("");
+      setSelectedManager("");
+
+      setSuccessMsg("Record has been created successfully!");
+      setTimeout(() => setSuccessMsg(""), 3000);
+ 
+    } catch (error) {
+      console.error("Error creating record: ", error);
+    };
   };
 
   const [selectedDept, setSelectedDept] = useState("");
@@ -117,7 +152,7 @@ const DashboardPage = () => {
 
             <div className="w-1/3 space-y-5">
               <div className="w-full max-w-md p-8 bg-white rounded-xl border mb-20 ml-10">
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={createRecord}>
                   <div>
                     <label className="input validator w-full">
                       <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -127,7 +162,7 @@ const DashboardPage = () => {
                         </g>
                       </svg>
                     
-                      <input type="text" required placeholder="Full Name" pattern="[A-Za-z\s]*" minlength="1" maxlength="256"/>
+                      <input name="name" type="text" required placeholder="Full Name" pattern="[A-Za-z\s]*" minlength="1" maxlength="256"/>
                     </label>
                   </div>
 
@@ -137,7 +172,7 @@ const DashboardPage = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                       </svg>
-                      <input type="text" required placeholder="Role" pattern="[A-Za-z\s]*" minlength="1" maxlength="256"/>
+                      <input name="role" type="text" required placeholder="Role" pattern="[A-Za-z\s]*" minlength="1" maxlength="256"/>
                     </label>
                   </div>
 
@@ -149,7 +184,7 @@ const DashboardPage = () => {
                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                         </g>
                       </svg>
-                      <input type="email" placeholder="Email" required />
+                      <input name="email" type="email" placeholder="Email" required />
                     </label>
                   </div>
 
@@ -170,6 +205,7 @@ const DashboardPage = () => {
                         </g>
                       </svg>
                       <input
+                        name="phone"
                         type="tel"
                         className="tabular-nums"
                         required
@@ -189,7 +225,8 @@ const DashboardPage = () => {
                   <div className="form-control validator w-full max-w-sm">
                     <label className="flex items-center gap-3 input input-bordered w-full">
                       <span className="text-gray-400">DOB</span>
-                      <input 
+                      <input
+                        name="dob"
                         type="date" 
                         className="w-full" 
                         required 
@@ -204,6 +241,7 @@ const DashboardPage = () => {
                       </svg>
 
                       <input
+                        name="address"
                         type="text"
                         placeholder="Address"
                         className="w-full"
@@ -239,8 +277,14 @@ const DashboardPage = () => {
                         </ul>
                     </div>
                   </div>
-                  
-
+                
+                  <div className='flex items-center justify-center gap-3'>
+                    <label className="flex items-center gap-2 cursor-pointer mt-2">
+                      <input name="isManager" type="checkbox" className="checkbox checkbox-sm checkbox-accent"/>
+                      <span className="text-sm italic opacity-50">Set to managerial permissions</span>
+                    </label>
+                  </div>
+              
                   <div className='w-full'>
                     <button type="submit" className="btn btn-accent w-full">
                       Create Employee

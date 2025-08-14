@@ -41,7 +41,7 @@ const recordSchema = new mongoose.Schema({
         required: true
     },
 
-    managerID: {
+    manager: {
         type: String,
         required: false
     },
