@@ -9,7 +9,7 @@ const RecordCard = ({record, onDelete}) => {
     <div key={record.id} className="bg-white border rounded shadow p-4 h-32 relative">
       <div className='space-y-1'>
         <h1 className='font-bold text-2xl'>{record.name}</h1>
-        <h3 className='text-sm opacity-50'>• {record.title}</h3>
+        <h3 className='text-sm opacity-50'>• {record.role}</h3>
       </div>
 
       <div className='flex flex-row items-center gap-4 text-xs font-mono'>
@@ -45,7 +45,7 @@ const RecordCard = ({record, onDelete}) => {
                 <h1 className='font-bold text-3xl'>{record.name}</h1>
                 <Status key={record._id} record={record} />
               </div>
-              <h3 className='font-sembold font-mono text-sm opacity-50'>{record.title} • {record._id}</h3>
+              <h3 className='font-sembold font-mono text-sm opacity-50'>{record.role} • {record._id}</h3>
             </div>
 
             <div className="h-px bg-gray-300 my-4" />
@@ -78,21 +78,21 @@ const RecordCard = ({record, onDelete}) => {
                     <circle cx="12" cy="7" r="4"></circle>
                   </g>
                 </svg>
-                <span>Male</span>
+                <span>{record.gender}</span>
               </div>
 
               <div className='flex flex-row items-center gap-2 bg-base-200 rounded py-2 px-3 w-fit font-mono'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-[1em] opacity-50">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m12 9.75-1.5.75a3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0L3 16.5m15-3.379a48.474 48.474 0 0 0-6-.371c-2.032 0-4.034.126-6 .371m12 0c.39.049.777.102 1.163.16 1.07.16 1.837 1.094 1.837 2.175v5.169c0 .621-.504 1.125-1.125 1.125H4.125A1.125 1.125 0 0 1 3 20.625v-5.17c0-1.08.768-2.014 1.837-2.174A47.78 47.78 0 0 1 6 13.12M12.265 3.11a.375.375 0 1 1-.53 0L12 2.845l.265.265Zm-3 0a.375.375 0 1 1-.53 0L9 2.845l.265.265Zm6 0a.375.375 0 1 1-.53 0L15 2.845l.265.265Z" />
                 </svg>
-                <span>26/12/2003</span>
+                <span>{new Date(record.dob).toLocaleDateString()}</span>
               </div>
 
               <div className='flex flex-row items-center gap-2 bg-base-200 rounded py-2 px-3 w-fit font-mono'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="h-[1em] opacity-50">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                 </svg>
-                <span>27 Peterborough Road, E10 6DL</span>
+                <span>{record.address}</span>
               </div>
             </div>
 
@@ -110,7 +110,7 @@ const RecordCard = ({record, onDelete}) => {
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-[1em] opacity-50">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z"/>
                 </svg>
-                <span>{record.managerID}</span>
+                <span>{record.manager}</span>
               </div>
             </div>
 
