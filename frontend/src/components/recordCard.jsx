@@ -56,6 +56,8 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
         </button>
         
         <dialog id={`modal_${record._id}`} className="modal">
+          <div className="modal-backdrop backdrop-blur-sm bg-black/30"></div>
+
           <div className="modal-box">
             <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => setEditing(false)}>✕</button>
