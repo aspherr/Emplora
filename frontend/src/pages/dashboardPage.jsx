@@ -59,7 +59,7 @@ const DashboardPage = () => {
       dob: form.target.dob.value,
       address: form.target.address.value.trim(),
       manager: selectedManager,
-      status: "active",
+      status: "Active",
       role: form.target.role.value.trim(),
       department: selectedDept,
       isManager: form.target.isManager.checked
