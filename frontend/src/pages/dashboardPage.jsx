@@ -7,6 +7,8 @@ import GenderSelector from '../components/genderSelector';
 
 const DashboardPage = () => {
   const [records, setRecords] = useState([]);
+  const [selectedManager, setSelectedManager] = useState("");
+  const [managers, setManagers] = useState([]);
 
   useEffect(() => {
     const fetchRecords = async () => {
@@ -19,7 +21,18 @@ const DashboardPage = () => {
       }
     };
 
+    const fetchManagers = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/api/records/managers");
+        setManagers(res.data.map(doc => doc.name));
+        
+      } catch (error) {
+        console.error("Error fetching manager(s) data: ", error);
+      }
+    };
+  
     fetchRecords();
+    fetchManagers();
   }, []);
 
 
@@ -100,12 +113,6 @@ const DashboardPage = () => {
     "Product Management",
   ];
 
-  const [selectedManager, setSelectedManager] = useState("");
-  const managers = [
-    "Yixuan",
-    "Zhu Yuan",
-    "Jane Doe"
-  ];
 
   return (
     <div>

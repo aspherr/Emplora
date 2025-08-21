@@ -20,7 +20,21 @@ export async function getRecordById(req, res) {
         res.status(200).json(record);
 
     } catch (error) {
-        console.error("Error in GET records controller: ", error);
+        console.error("Error in GET record ID controller: ", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+export async function getManagerNames(_, res) {
+    try {
+        const managers = await Record.find({ empCode: { $regex: /^MNGR-/ } });
+        if (!managers) {
+            return res.status(404).json({ message: "Error: No managers can be found" });
+        };
+        res.status(200).json(managers);
+
+    } catch (error) {
+        console.error("Error in GET managers controller: ", error);
         res.status(500).json({ message: "Internal server error" });
     }
 }
