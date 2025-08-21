@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 const DeptDropdown = ({value, onChange}) => {
-
-    
     const departments = [
       "Human Resources",
       "Finance",

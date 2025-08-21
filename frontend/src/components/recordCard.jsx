@@ -3,8 +3,12 @@ import axios from "axios";
 
 import Status from "./status";
 import GenderSelector from './genderSelector';
+import MngrDropdown from './mngrDropdown';
+import DeptDropdown from './deptDropdown';
 
 const RecordCard = ({record, onDelete, onStatusChange}) => {
+  const [selectedDept, setSelectedDept] = useState("");
+
   const detailsId = `modal_${record._id}`;
 
   const statuses = [
@@ -24,8 +28,11 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
   };
 
   const [editing, setEditing] = useState(false);
-  const handleEditing = () => {setEditing(false)};
-  
+  const handleEditing = () => {
+    setEditing(false)
+    setSelectedDept("");
+  };
+
   return (
     <div key={record.id} className="bg-white border rounded shadow p-4 h-34 relative">
       <div className='space-y-1'>
@@ -60,7 +67,7 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
 
           <div className="modal-box">
             <form method="dialog">
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => setEditing(false)}>✕</button>
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => handleEditing()}>✕</button>
             </form>
 
             {editing ? (
@@ -133,6 +140,11 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
                       <input name="address" type="text" placeholder={record.address} required/>
                     </label>
                   </div>
+
+                  <div className='w-96'>
+                    <DeptDropdown value={selectedDept} onChange={setSelectedDept}/>  
+                  </div>
+                  
               </div>
             ) : (
               <>
@@ -215,7 +227,7 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
             {editing ? (
               <>
               <div className='flex flex-row items-center gap-4 mt-10'>
-                  <button type="button" className='btn flex-1' onClick={(e) => { e.preventDefault(); e.stopPropagation(); setEditing(false)}}>
+                  <button type="button" className='btn flex-1' onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleEditing()}}>
                     Cancel Changes
                   </button>
 

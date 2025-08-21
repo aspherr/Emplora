@@ -4,8 +4,9 @@ import axios from "axios";
 import Navbar from '../components/navbar'
 import RecordCard from '../components/recordCard';
 import GenderSelector from '../components/genderSelector';
-import DeptDropdown from '../components/deptDropdown';
 import MngrDropdown from '../components/mngrDropdown';
+import DeptDropdown from '../components/deptDropdown';
+
 
 const DashboardPage = () => {
   const [records, setRecords] = useState([]);
