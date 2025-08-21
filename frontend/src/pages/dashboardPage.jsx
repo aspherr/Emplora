@@ -5,11 +5,11 @@ import Navbar from '../components/navbar'
 import RecordCard from '../components/recordCard';
 import GenderSelector from '../components/genderSelector';
 import DeptDropdown from '../components/deptDropdown';
+import MngrDropdown from '../components/mngrDropdown';
 
 const DashboardPage = () => {
   const [records, setRecords] = useState([]);
   const [selectedManager, setSelectedManager] = useState("");
-  const [managers, setManagers] = useState([]);
   const [selectedDept, setSelectedDept] = useState("");
 
   useEffect(() => {
@@ -23,18 +23,7 @@ const DashboardPage = () => {
       }
     };
 
-    const fetchManagers = async () => {
-      try {
-        const res = await axios.get("http://localhost:3000/api/records/managers");
-        setManagers(res.data.map(doc => doc.name));
-        
-      } catch (error) {
-        console.error("Error fetching manager(s) data: ", error);
-      }
-    };
-  
     fetchRecords();
-    fetchManagers();
   }, []);
 
 
@@ -249,19 +238,7 @@ const DashboardPage = () => {
                     </label>
                   </div>
 
-                  <div className='flex items-center gap-3'>
-                    <input type="text" placeholder="Manager" className="input w-70 min-w-0" value={selectedManager} disabled />
-                    <div className="dropdown dropdown-left dropdown-end">
-                      <label tabIndex={0} className="btn m-0 whitespace-nowrap px-4">Select</label>
-                        <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
-                          {managers.map((mngr, idx) => (
-                            <li key={idx}>
-                              <a onClick={() => setSelectedManager(mngr)}>{mngr}</a>
-                            </li>
-                          ))}
-                        </ul>
-                    </div>
-                  </div>
+                  <MngrDropdown value={selectedManager} onChange={setSelectedManager} />
 
                   <DeptDropdown value={selectedDept} onChange={setSelectedDept} />
                 
