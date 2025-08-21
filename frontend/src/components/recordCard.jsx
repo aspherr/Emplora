@@ -141,7 +141,7 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
                     <h1 className='font-bold text-3xl'>{record.name}</h1>
                     <Status key={record._id} record={record} />
                   </div>
-                  <h3 className='font-sembold font-mono text-sm opacity-50'>{record.role} • {record._id}</h3>
+                  <h3 className='font-sembold font-mono text-sm opacity-50'>{record.role} • {record.empCode}</h3>
                 </div>
 
                 <div className="h-px bg-gray-300 my-4" />

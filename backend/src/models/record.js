@@ -1,6 +1,17 @@
 import mongoose from "mongoose";
 
+const encodeID = (id, isManager) => {
+    const tail = id.toString().slice(-6).toUpperCase();
+    return (isManager ? 'MNGR-' : 'EMP-') + tail;
+}
+
 const recordSchema = new mongoose.Schema({
+    empCode: {
+        type: String,
+        unique: true,
+        index: true
+    },
+
     name: {
         type: String,
         required: true
@@ -57,6 +68,13 @@ const recordSchema = new mongoose.Schema({
     }
 
 }, { timestamps: true} );
+
+recordSchema.pre('validate', function(next) {
+    if (!this.empCode && this._id) {
+        this.empCode = encodeID(this._id, this.isManager);
+    };
+    next();
+})
 
 const Record = mongoose.model("Record", recordSchema);
 

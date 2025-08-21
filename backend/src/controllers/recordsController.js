@@ -28,8 +28,8 @@ export async function getRecordById(req, res) {
 export async function createRecord(req, res) {
     try {
 
-        const {name, email, phone, gender, dob, address, department, role, manager, status, isManager} = req.body;
-        const newRecord = new Record({name, email, phone, gender, dob, address, department, role, manager, status, isManager})
+        const {empCode, name, email, phone, gender, dob, address, department, role, manager, status, isManager} = req.body;
+        const newRecord = new Record({empCode, name, email, phone, gender, dob, address, department, role, manager, status, isManager})
         await newRecord.save();
         res.status(201).json(newRecord);
 
