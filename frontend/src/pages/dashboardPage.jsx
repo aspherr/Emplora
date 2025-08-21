@@ -4,11 +4,13 @@ import axios from "axios";
 import Navbar from '../components/navbar'
 import RecordCard from '../components/recordCard';
 import GenderSelector from '../components/genderSelector';
+import DeptDropdown from '../components/deptDropdown';
 
 const DashboardPage = () => {
   const [records, setRecords] = useState([]);
   const [selectedManager, setSelectedManager] = useState("");
   const [managers, setManagers] = useState([]);
+  const [selectedDept, setSelectedDept] = useState("");
 
   useEffect(() => {
     const fetchRecords = async () => {
@@ -98,20 +100,6 @@ const DashboardPage = () => {
   const handleStatusChange = (id, newStatus) => {
     setRecords(prev => prev.map(r => r._id === id ? { ...r, status: newStatus } : r));
   };
-
-  const [selectedDept, setSelectedDept] = useState("");
-  const departments = [
-    "Human Resources",
-    "Finance",
-    "Marketing",
-    "Sales",
-    "Information Technology",
-    "Operations",
-    "Customer Support",
-    "Legal",
-    "Engineering",
-    "Product Management",
-  ];
 
 
   return (
@@ -275,19 +263,7 @@ const DashboardPage = () => {
                     </div>
                   </div>
 
-                  <div className='flex items-center gap-3'>
-                    <input type="text" placeholder="Department" className="input w-70 min-w-0" value={selectedDept} disabled />
-                    <div className="dropdown dropdown-left dropdown-end">
-                      <label tabIndex={0} className="btn m-0 whitespace-nowrap px-4">Select</label>
-                        <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
-                          {departments.map((dept, idx) => (
-                            <li key={idx}>
-                              <a onClick={() => setSelectedDept(dept)}>{dept}</a>
-                            </li>
-                          ))}
-                        </ul>
-                    </div>
-                  </div>
+                  <DeptDropdown value={selectedDept} onChange={setSelectedDept} />
                 
                   <div className='flex items-center justify-center gap-3'>
                     <label className="flex items-center gap-2 cursor-pointer mt-2">
