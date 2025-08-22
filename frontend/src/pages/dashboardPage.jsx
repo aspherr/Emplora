@@ -239,9 +239,9 @@ const DashboardPage = () => {
                     </label>
                   </div>
 
-                  <MngrDropdown value={selectedManager} onChange={setSelectedManager} />
+                  <MngrDropdown value={selectedManager} onChange={setSelectedManager} placeholder={"Manager"}/>
 
-                  <DeptDropdown value={selectedDept} onChange={setSelectedDept} />
+                  <DeptDropdown value={selectedDept} onChange={setSelectedDept} placeholder={"Department"} />
                 
                   <div className='flex items-center justify-center gap-3'>
                     <label className="flex items-center gap-2 cursor-pointer mt-2">

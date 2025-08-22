@@ -7,6 +7,7 @@ import MngrDropdown from './mngrDropdown';
 import DeptDropdown from './deptDropdown';
 
 const RecordCard = ({record, onDelete, onStatusChange}) => {
+  const [selectedManager, setSelectedManager] = useState("");
   const [selectedDept, setSelectedDept] = useState("");
 
   const detailsId = `modal_${record._id}`;
@@ -31,6 +32,14 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
   const handleEditing = () => {
     setEditing(false)
     setSelectedDept("");
+  };
+
+  const convertDate = (v) => {
+    const d = new Date(v);
+    const yyyy = d.getUTCFullYear();
+    const mm = String(d.getUTCMonth() + 1).padStart(2, "0");
+    const dd = String(d.getUTCDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
   };
 
   return (
@@ -127,7 +136,7 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
                   <div className="form-control validator w-96">
                     <label className="input input-bordered flex items-center gap-3 w-full">
                       <span className="text-gray-400 shrink-0">DOB</span>
-                      <input name="dob" type="date" className="grow min-w-0" placeholder={record.dob} required />
+                      <input name="dob" type="date" className="grow min-w-0" defaultValue={record.dob ? convertDate(record.dob) : ""} required />
                     </label>
                   </div>
 
@@ -142,9 +151,12 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
                   </div>
 
                   <div className='w-96'>
-                    <DeptDropdown value={selectedDept} onChange={setSelectedDept}/>  
+                    <MngrDropdown value={selectedManager} onChange={setSelectedManager} placeholder={record.manager} />  
                   </div>
-                  
+
+                  <div className='w-96'>
+                    <DeptDropdown value={selectedDept} onChange={setSelectedDept} placeholder={record.department} />  
+                  </div>                  
               </div>
             ) : (
               <>
