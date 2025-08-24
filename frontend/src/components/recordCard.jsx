@@ -6,7 +6,7 @@ import GenderSelector from './genderSelector';
 import MngrDropdown from './mngrDropdown';
 import DeptDropdown from './deptDropdown';
 
-const RecordCard = ({record, onDelete, onStatusChange}) => {
+const RecordCard = ({record, onDelete, onStatusChange, onSavedEdit}) => {
   const [selectedManager, setSelectedManager] = useState("");
   const [selectedDept, setSelectedDept] = useState("");
 
@@ -63,7 +63,14 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
     );
 
     try {
-      axios.patch(`http://localhost:3000/api/records/${id}`, payload);
+      const { data } = await axios.patch(`http://localhost:3000/api/records/${id}`, payload);
+      const serverUpdated = data?.record ?? data;       
+      const clientUpdated = { ...record, ...payload }; 
+      const merged = serverUpdated && serverUpdated._id ? { ...record, ...serverUpdated } : clientUpdated;
+      
+      onSavedEdit?.(merged, record._id); 
+      handleEditing(false);
+      document.getElementById(`modal_${record._id}`)?.close();
 
     } catch (error) {
       console.error(`Error updating record for record ID: ${id}`, error);

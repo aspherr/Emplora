@@ -91,6 +91,13 @@ const DashboardPage = () => {
     setRecords(prev => prev.map(r => r._id === id ? { ...r, status: newStatus } : r));
   };
 
+  const handleSavedEdit = (updated, idFromChild) => {
+    const updatedId = idFromChild ?? updated._id ?? updated.id;
+    setRecords(prev => prev.map(r => (r._id === updatedId ? { ...r, ...updated } : r)));
+    
+    setSuccessMsg("Record updated successfully!");
+    setTimeout(() => setSuccessMsg(""), 2500);
+  };
 
   return (
     <div>
@@ -143,7 +150,7 @@ const DashboardPage = () => {
               <div className="max-w-3xl w-full mt-5 text-left h-[600px] overflow-y-auto space-y-4">
                 {records.length > 0 ? (
                   records.map((record) => (
-                    <RecordCard key={record._id} record={record} onDelete={() => handleDeleteClick(record._id)} onStatusChange={handleStatusChange} />
+                    <RecordCard key={record._id} record={record} onDelete={() => handleDeleteClick(record._id)} onStatusChange={handleStatusChange} onSavedEdit={handleSavedEdit}/>
                   ))
                 ) : (
                   <p className="text-gray-500">No records found.</p>
