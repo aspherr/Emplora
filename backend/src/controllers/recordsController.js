@@ -55,8 +55,10 @@ export async function createRecord(req, res) {
 
 export async function editRecord(req, res) {
     try {
-        const {name, email, phone, department, title, managerID, status} = req.body;
-        const updatedRecord = await Record.findByIdAndUpdate(req.params.id, {name, email, phone, department, title, managerID, status});
+        const {name, email, phone, gender, dob, address, department, role, manager, status} = req.body;
+        const updatedRecord = await Record.findByIdAndUpdate(
+            req.params.id, {name, email, phone, gender, dob, address, department, role, manager, status},
+            { new: true, runValidators: true });
         if (!updatedRecord) {
             return res.status(404).json({ message: "Error: record could not be found" });
         };

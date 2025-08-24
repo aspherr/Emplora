@@ -20,7 +20,7 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
 
   const updateStatus = async (id, updatedStatus) => {
     try {
-      await axios.put(`http://localhost:3000/api/records/${id}`, {status: updatedStatus});
+      await axios.patch(`http://localhost:3000/api/records/${id}`, {status: updatedStatus});
       onStatusChange?.(id, updatedStatus);
 
     } catch (error) {
@@ -40,6 +40,34 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
     const mm = String(d.getUTCMonth() + 1).padStart(2, "0");
     const dd = String(d.getUTCDate()).padStart(2, "0");
     return `${yyyy}-${mm}-${dd}`;
+  };
+
+  const updateRecord = async (id, e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+  
+    const raw = {
+      name: form.name?.value.trim(),
+      email: form.email?.value.trim(),
+      phone: form.phone?.value.trim(),
+      gender: form.gender?.value,
+      dob: form.dob?.value,
+      address: form.address?.value.trim(),
+      manager: selectedManager,
+      role: form.role?.value.trim(),
+      department: selectedDept,
+    };
+
+    const payload = Object.fromEntries(
+      Object.entries(raw).filter(([, v]) => v !== "" && v !== undefined)
+    );
+
+    try {
+      axios.patch(`http://localhost:3000/api/records/${id}`, payload);
+
+    } catch (error) {
+      console.error(`Error updating record for record ID: ${id}`, error);
+    }
   };
 
   return (
@@ -80,9 +108,9 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
             </form>
 
             {editing ? (
-              <div className='mt-7 space-y-3 flex flex-col items-center'>
+              <form className='mt-7 space-y-3 flex flex-col items-center' onSubmit={(e) => updateRecord(record._id, e)}>
                 <div>
-                  <label className="input validator w-96">
+                  <label className="input w-96">
                     <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                       <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
@@ -90,41 +118,41 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
                       </g>
                     </svg>
                   
-                    <input name="name" type="text" required placeholder={record.name} pattern="[A-Za-z\s]*" minlength="1" maxlength="256"/>
+                    <input name="name" type="text" required defaultValue={record.name} pattern="[A-Za-z\s]*" minlength="1" maxlength="256"/>
                   </label>
                 </div>
 
                 <div>
-                  <label className="input validator w-96">
+                  <label className="input w-96">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-[1em] opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                     </svg>
-                    <input name="role" type="text" required placeholder={record.role} pattern="[A-Za-z\s]*" minlength="1" maxlength="256"/>
+                    <input name="role" type="text" required defaultValue={record.role} pattern="[A-Za-z\s]*" minlength="1" maxlength="256"/>
                   </label>
                 </div>
 
                 <div>
-                    <label className="input validator w-96">
+                    <label className="input w-96">
                       <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
                         <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                         </g>
                       </svg>
-                      <input name="email" type="email" placeholder={record.email} required />
+                      <input name="email" type="email" defaultValue={record.email} required />
                     </label>
                   </div>
 
                   <div>
-                    <label className="input validator w-96">
+                    <label className="input w-96">
                       <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                         <g fill="none">
                           <path d="M7.25 11.5C6.83579 11.5 6.5 11.8358 6.5 12.25C6.5 12.6642 6.83579 13 7.25 13H8.75C9.16421 13 9.5 12.6642 9.5 12.25C9.5 11.8358 9.16421 11.5 8.75 11.5H7.25Z" fill="currentColor"></path>
                           <path fillRule="evenodd" clipRule="evenodd" d="M6 1C4.61929 1 3.5 2.11929 3.5 3.5V12.5C3.5 13.8807 4.61929 15 6 15H10C11.3807 15 12.5 13.8807 12.5 12.5V3.5C12.5 2.11929 11.3807 1 10 1H6ZM10 2.5H9.5V3C9.5 3.27614 9.27614 3.5 9 3.5H7C6.72386 3.5 6.5 3.27614 6.5 3V2.5H6C5.44771 2.5 5 2.94772 5 3.5V12.5C5 13.0523 5.44772 13.5 6 13.5H10C10.5523 13.5 11 13.0523 11 12.5V3.5C11 2.94772 10.5523 2.5 10 2.5Z" fill="currentColor"></path>
                         </g>
                       </svg>
-                      <input name="phone" type="tel" className="tabular-nums" required placeholder={record.phone} pattern="[0-9]*" minlength="10" maxlength="10" title="Must be 10 digits"
+                      <input name="phone" type="tel" className="tabular-nums" required defaultValue={record.phone} pattern="[0-9]*" minlength="10" maxlength="10" title="Must be 10 digits"
                       />
                     </label>
                   </div>
@@ -133,7 +161,7 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
                     <GenderSelector />
                   </div>
 
-                  <div className="form-control validator w-96">
+                  <div className="form-control w-96">
                     <label className="input input-bordered flex items-center gap-3 w-full">
                       <span className="text-gray-400 shrink-0">DOB</span>
                       <input name="dob" type="date" className="grow min-w-0" defaultValue={record.dob ? convertDate(record.dob) : ""} required />
@@ -141,12 +169,12 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
                   </div>
 
                   <div>
-                    <label className="input validator w-96">
+                    <label className="input w-96">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="h-[1em] opacity-50">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                       </svg>
 
-                      <input name="address" type="text" placeholder={record.address} required/>
+                      <input name="address" type="text" defaultValue={record.address} required/>
                     </label>
                   </div>
 
@@ -156,8 +184,19 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
 
                   <div className='w-96'>
                     <DeptDropdown value={selectedDept} onChange={setSelectedDept} placeholder={record.department} />  
-                  </div>                  
-              </div>
+                  </div>
+
+                  <div className='flex flex-row items-center gap-4 w-full'>
+                    <button type="button" className='btn flex-1' onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleEditing()}}>
+                      Cancel Changes
+                    </button>
+
+                    <button type="submit" className='btn btn-accent flex-1'>
+                      Confirm Changes
+                    </button>
+                  </div>                 
+              </form>
+            
             ) : (
               <>
                 <div className='space-y-1'>
@@ -233,23 +272,7 @@ const RecordCard = ({record, onDelete, onStatusChange}) => {
                     <span>{record.manager}</span>
                   </div>
                 </div>
-              </>
-            )}
 
-            {editing ? (
-              <>
-              <div className='flex flex-row items-center gap-4 mt-10'>
-                  <button type="button" className='btn flex-1' onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleEditing()}}>
-                    Cancel Changes
-                  </button>
-
-                  <button type="button" className='btn btn-accent flex-1' onClick={(e) => {e.preventDefault(); e.stopPropagation(); setEditing(false);}}>
-                    Confirm Changes
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
                 <div className='flex flex-row items-center gap-4 mt-10'>
                   <div className="dropdown dropdown-top">
                     <div tabIndex={0} role="button" className="btn btn-accent m-0 whitespace-nowrap px-4">

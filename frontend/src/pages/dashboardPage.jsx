@@ -140,7 +140,7 @@ const DashboardPage = () => {
               </label>
             
               {/* Records list */}
-              <div className="max-w-3xl w-full text-left h-[600px] overflow-y-auto space-y-4">
+              <div className="max-w-3xl w-full mt-5 text-left h-[600px] overflow-y-auto space-y-4">
                 {records.length > 0 ? (
                   records.map((record) => (
                     <RecordCard key={record._id} record={record} onDelete={() => handleDeleteClick(record._id)} onStatusChange={handleStatusChange} />
