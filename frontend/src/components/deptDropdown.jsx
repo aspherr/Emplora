@@ -22,7 +22,7 @@ const DeptDropdown = ({value, onChange, placeholder}) => {
                 <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
                 {departments.map((dept, idx) => (
                     <li key={idx}>
-                    <a onClick={() => onChange(dept)}>{dept}</a>
+                    <a onClick={() => {onChange(dept); document.activeElement.blur();}}>{dept}</a>
                     </li>
                 ))}
                 </ul>

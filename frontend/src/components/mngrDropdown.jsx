@@ -26,7 +26,7 @@ const MngrDropdown = ({value, onChange, placeholder}) => {
                 <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
                 {managers.map((mngr, idx) => (
                     <li key={idx}>
-                    <a onClick={() => onChange(mngr)}>{mngr}</a>
+                    <a onClick={() => {onChange(mngr); document.activeElement.blur();}}>{mngr}</a>
                     </li>
                 ))}
                 </ul>
