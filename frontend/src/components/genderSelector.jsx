@@ -6,7 +6,7 @@ const GenderSelector = () => {
   return (
     <div className="form-control w-full max-w-sm">
       <div className="btn-group grid grid-cols-3 w-full gap-3">
-        <label className={`btn ${gender === 'Male' ? 'btn-active' : ''}`}>
+        <label className={`btn btn-soft btn-accent ${gender === 'Male' ? 'btn-active' : ''}`}>
           <input
             type="radio"
             name="gender"
@@ -18,7 +18,7 @@ const GenderSelector = () => {
           Male
         </label>
 
-        <label className={`btn ${gender === 'Female' ? 'btn-active' : ''}`}>
+        <label className={`btn btn-soft btn-accent ${gender === 'Female' ? 'btn-active' : ''}`}>
           <input
             type="radio"
             name="gender"
@@ -30,7 +30,7 @@ const GenderSelector = () => {
           Female
         </label>
 
-        <label className={`btn ${gender === 'Other' ? 'btn-active' : ''}`}>
+        <label className={`btn btn-soft btn-accent ${gender === 'Other' ? 'btn-active' : ''}`}>
           <input
             type="radio"
             name="gender"

@@ -115,7 +115,7 @@ const RecordCard = ({record, onDelete, onStatusChange, onSavedEdit}) => {
             </form>
 
             {editing ? (
-              <form className='mt-7 space-y-3 flex flex-col items-center' onSubmit={(e) => updateRecord(record._id, e)}>
+              <form className='mt-7 gap-3 flex flex-col items-center' onSubmit={(e) => updateRecord(record._id, e)}>
                 <div>
                   <label className="input w-96">
                     <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -193,15 +193,15 @@ const RecordCard = ({record, onDelete, onStatusChange, onSavedEdit}) => {
                     <DeptDropdown value={selectedDept} onChange={setSelectedDept} placeholder={record.department} />  
                   </div>
 
-                  <div className='flex flex-row items-center gap-4 w-full'>
-                    <button type="button" className='btn flex-1' onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleEditing()}}>
+                  <div className="w-96 grid grid-cols-2 gap-4 mt-5">
+                    <button type="button" className="btn w-full" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleEditing(); }}>
                       Cancel Changes
                     </button>
 
-                    <button type="submit" className='btn btn-accent flex-1'>
+                    <button type="submit" className="btn btn-accent w-full">
                       Confirm Changes
                     </button>
-                  </div>                 
+                  </div>                
               </form>
             
             ) : (
