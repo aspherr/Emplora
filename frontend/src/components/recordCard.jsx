@@ -125,7 +125,7 @@ const RecordCard = ({record, onDelete, onStatusChange, onSavedEdit}) => {
                       </g>
                     </svg>
                   
-                    <input name="name" type="text" required defaultValue={record.name} pattern="[A-Za-z\s]*" minlength="1" maxlength="256"/>
+                    <input name="name" type="text" required defaultValue={record.name} pattern="[A-Za-z\s]*" minLength="1" maxLength="256"/>
                   </label>
                 </div>
 
@@ -135,7 +135,7 @@ const RecordCard = ({record, onDelete, onStatusChange, onSavedEdit}) => {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                     </svg>
-                    <input name="role" type="text" required defaultValue={record.role} pattern="[A-Za-z\s]*" minlength="1" maxlength="256"/>
+                    <input name="role" type="text" required defaultValue={record.role} pattern="[A-Za-z\s]*" minLength="1" maxLength="256"/>
                   </label>
                 </div>
 
@@ -159,7 +159,7 @@ const RecordCard = ({record, onDelete, onStatusChange, onSavedEdit}) => {
                           <path fillRule="evenodd" clipRule="evenodd" d="M6 1C4.61929 1 3.5 2.11929 3.5 3.5V12.5C3.5 13.8807 4.61929 15 6 15H10C11.3807 15 12.5 13.8807 12.5 12.5V3.5C12.5 2.11929 11.3807 1 10 1H6ZM10 2.5H9.5V3C9.5 3.27614 9.27614 3.5 9 3.5H7C6.72386 3.5 6.5 3.27614 6.5 3V2.5H6C5.44771 2.5 5 2.94772 5 3.5V12.5C5 13.0523 5.44772 13.5 6 13.5H10C10.5523 13.5 11 13.0523 11 12.5V3.5C11 2.94772 10.5523 2.5 10 2.5Z" fill="currentColor"></path>
                         </g>
                       </svg>
-                      <input name="phone" type="tel" className="tabular-nums" required defaultValue={record.phone} pattern="[0-9]*" minlength="10" maxlength="10" title="Must be 10 digits"
+                      <input name="phone" type="tel" className="tabular-nums" required defaultValue={record.phone} pattern="[0-9]*" minLength="10" maxLength="10" title="Must be 10 digits"
                       />
                     </label>
                   </div>

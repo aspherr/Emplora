@@ -46,7 +46,7 @@ const LoginPage = () => {
                   type="password"
                   required
                   placeholder="Password"
-                  minlength="8"
+                  minLength="8"
                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                   title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
                   />

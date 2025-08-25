@@ -34,8 +34,8 @@ const RegisterPage = () => {
                     required
                     placeholder="Full Name"
                     pattern="[A-Za-z]*"
-                    minlength="1"
-                    maxlength="256"
+                    minLength="1"
+                    maxLength="256"
                   />
                 </label>
 
@@ -71,7 +71,7 @@ const RegisterPage = () => {
                   type="password"
                   required
                   placeholder="Password"
-                  minlength="8"
+                  minLength="8"
                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                   title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
                   />
@@ -96,7 +96,7 @@ const RegisterPage = () => {
                   type="password"
                   required
                   placeholder="Confirm Password"
-                  minlength="8"
+                  minLength="8"
                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                   title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
                   />
