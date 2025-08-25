@@ -99,7 +99,7 @@ const DashboardPage = () => {
   };
 
   const [query, setQuery] = useState("");
-  const params = ["empCode", "name", "role", "email", "phone", "gender", "dob", "address", "department"];
+  const params = ["empCode", "name", "role", "email", "phone", "gender", "dob", "address", "department", "status"];
   const SORTS = useMemo(
     () => ({
       "A-Z":  (a, b) => (a.name ?? "").localeCompare(b.name ?? ""),
