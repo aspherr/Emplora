@@ -6,12 +6,13 @@ import RecordCard from '../components/recordCard';
 import GenderSelector from '../components/genderSelector';
 import MngrDropdown from '../components/mngrDropdown';
 import DeptDropdown from '../components/deptDropdown';
-
+import SortDropdown from '../components/sortDropdown';
 
 const DashboardPage = () => {
   const [records, setRecords] = useState([]);
   const [selectedManager, setSelectedManager] = useState("");
   const [selectedDept, setSelectedDept] = useState("");
+  const [selectedSort, setSelectedSort] = useState("");
 
   useEffect(() => {
     const fetchRecords = async () => {
@@ -110,7 +111,7 @@ const DashboardPage = () => {
       if (isGenderQuery) {
         return String(item?.gender ?? "").toLowerCase() === q;
       }
-      
+
       return params.some(key => String(item?.[key] ?? "").toLowerCase().includes(q))
     });
   
@@ -153,18 +154,22 @@ const DashboardPage = () => {
           <div className="flex flex-row ml-20">
 
             <div className='flex flex-col w-full'>
-              <label className="input">
-                <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.3-4.3"></path>
-                  </g>
-                </svg>
-                <input type="search" required placeholder="Search" onChange={(e) => {setQuery(e.target.value)}} />
-              </label>
+              <div className='flex flex-row'>
+                <label className="input w-full max-w-xl">
+                  <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.3-4.3"></path>
+                    </g>
+                  </svg>
+                  <input type="search" required placeholder="Search" onChange={(e) => {setQuery(e.target.value)}} />
+                </label>
+                
+                <SortDropdown value={selectedSort} onChange={setSelectedSort} />                
+              </div>
             
               {/* Records list */}
-              <div className="max-w-3xl w-full mt-5 text-left h-[600px] overflow-y-auto space-y-4">
+              <div className="max-w-3xl w-full mt-3 text-left h-[600px] overflow-y-auto space-y-4">
                 {filteredRecords.length > 0 ? (
                   filteredRecords.map((record) => (
                     <RecordCard key={record._id} record={record} onDelete={() => handleDeleteClick(record._id)} onStatusChange={handleStatusChange} onSavedEdit={handleSavedEdit}/>
