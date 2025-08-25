@@ -4,15 +4,15 @@ const SortDropdown = ({value, onChange}) => {
     const options = [
        "A-Z",
        "Z-A",
-       "Newest",
-       "Oldest"
+       "Newest → Oldest",
+       "Oldest → Newest"    
     ];
 
     return (
         <div className="flex items-center gap-3">
           <div className="dropdown dropdown-bottom dropdown-end ml-8">
             <div className="relative">
-              <input type="text" placeholder="Sort By" className="input disabled:bg-white disabled:text-black w-40 min-w-0 pr-10" value={value} disabled />
+              <input type="text" placeholder="Sort By" className="input disabled:bg-white disabled:text-black w-44 min-w-0 pr-10" value={value} disabled />
 
               <button type="button" tabIndex={0} aria-haspopup="listbox" aria-expanded={false} className="absolute right-3 top-1/2 -translate-y-1/2 grid place-items-center" style={{ width: 24, height: 24 }}>
                 <svg className="w-5 h-5" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">

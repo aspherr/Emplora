@@ -12,7 +12,7 @@ const DashboardPage = () => {
   const [records, setRecords] = useState([]);
   const [selectedManager, setSelectedManager] = useState("");
   const [selectedDept, setSelectedDept] = useState("");
-  const [selectedSort, setSelectedSort] = useState("");
+  const [sortMode, setSortMode] = useState("A-Z");
 
   useEffect(() => {
     const fetchRecords = async () => {
@@ -99,23 +99,30 @@ const DashboardPage = () => {
   };
 
   const [query, setQuery] = useState("");
-  const params = ["empCode", "name", "role", "email", "phone", "gender", "dob", "address", "department"]
-  const filteredRecords = useMemo(() => {
-    const q = query.toLowerCase().trim();
-    if (!q) return records;
+  const params = ["empCode", "name", "role", "email", "phone", "gender", "dob", "address", "department"];
+  const SORTS = useMemo(
+    () => ({
+      "A-Z":  (a, b) => (a.name ?? "").localeCompare(b.name ?? ""),
+      "Z-A": (a, b) => (b.name ?? "").localeCompare(a.name ?? ""),
+      "Newest → Oldest": (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+      "Oldest → Newest":  (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+    }), []);
 
-    const genderTerms = new Set(["male", "female", "other"]);
-    const isGenderQuery = genderTerms.has(q);
+    const visibleRecords = useMemo(() => {
+      const q = query.toLowerCase().trim();
+      const genderTerms = new Set(["male", "female", "other"]);
+      const isGenderQuery = genderTerms.has(q);
     
-    return records.filter((item) => {
-      if (isGenderQuery) {
-        return String(item?.gender ?? "").toLowerCase() === q;
-      }
-
-      return params.some(key => String(item?.[key] ?? "").toLowerCase().includes(q))
-    });
-  
-  }, [records, query]);
+      const filtered = q ? records.filter((item) =>
+            isGenderQuery ? String(item?.gender ?? "").toLowerCase() === q
+              : params.some((key) =>
+                  String(item?.[key] ?? "").toLowerCase().includes(q)
+                )
+          )
+        : records;
+        
+      return [...filtered].sort(SORTS[sortMode] ?? (() => 0));
+    }, [records, query, sortMode, SORTS]);
 
   return (
     <div>
@@ -165,13 +172,13 @@ const DashboardPage = () => {
                   <input type="search" required placeholder="Search" onChange={(e) => {setQuery(e.target.value)}} />
                 </label>
                 
-                <SortDropdown value={selectedSort} onChange={setSelectedSort} />                
+                <SortDropdown value={sortMode} onChange={setSortMode} />                
               </div>
             
               {/* Records list */}
               <div className="max-w-3xl w-full mt-3 text-left h-[600px] overflow-y-auto space-y-4">
-                {filteredRecords.length > 0 ? (
-                  filteredRecords.map((record) => (
+                {visibleRecords.length > 0 ? (
+                  visibleRecords.map((record) => (
                     <RecordCard key={record._id} record={record} onDelete={() => handleDeleteClick(record._id)} onStatusChange={handleStatusChange} onSavedEdit={handleSavedEdit}/>
                   ))
                 ) : (
