@@ -11,6 +11,7 @@ import RateLimited from '../components/rateLimited';
 
 const DashboardPage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [records, setRecords] = useState([]);
   const [selectedManager, setSelectedManager] = useState("");
   const [selectedDept, setSelectedDept] = useState("");
@@ -29,6 +30,9 @@ const DashboardPage = () => {
         if (error.response.status === 429) {
           setIsRateLimited(true);
         }
+      
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -191,6 +195,11 @@ const DashboardPage = () => {
                   visibleRecords.map((record) => (
                     <RecordCard key={record._id} record={record} onDelete={() => handleDeleteClick(record._id)} onStatusChange={handleStatusChange} onSavedEdit={handleSavedEdit}/>
                   ))
+                
+                ) : loading ? (
+                  <div className='flex h-full w-full items-center justify-center'>
+                    <span className="loading loading-spinner loading-lg"></span>
+                  </div>  
                 
                 ) : (
                   <p className="text-gray-500">No records found.</p>
