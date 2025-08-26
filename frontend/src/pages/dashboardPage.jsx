@@ -7,8 +7,10 @@ import GenderSelector from '../components/genderSelector';
 import MngrDropdown from '../components/mngrDropdown';
 import DeptDropdown from '../components/deptDropdown';
 import SortDropdown from '../components/sortDropdown';
+import RateLimited from '../components/rateLimited';
 
 const DashboardPage = () => {
+  const [isRateLimited, setIsRateLimited] = useState(false);
   const [records, setRecords] = useState([]);
   const [selectedManager, setSelectedManager] = useState("");
   const [selectedDept, setSelectedDept] = useState("");
@@ -19,9 +21,14 @@ const DashboardPage = () => {
       try {
         const res = await axios.get("http://localhost:3000/api/records");
         setRecords(res.data);
+        setIsRateLimited(false);
+        setFetched(true);
   
       } catch (error) {
         console.error("Error fetching records: ", error);
+        if (error.response.status === 429) {
+          setIsRateLimited(true);
+        }
       }
     };
 
@@ -177,10 +184,14 @@ const DashboardPage = () => {
             
               {/* Records list */}
               <div className="max-w-3xl w-full mt-3 text-left h-[600px] overflow-y-auto space-y-4">
-                {visibleRecords.length > 0 ? (
+                {isRateLimited ? (
+                  <RateLimited />
+
+                ) : visibleRecords.length > 0 ? (
                   visibleRecords.map((record) => (
                     <RecordCard key={record._id} record={record} onDelete={() => handleDeleteClick(record._id)} onStatusChange={handleStatusChange} onSavedEdit={handleSavedEdit}/>
                   ))
+                
                 ) : (
                   <p className="text-gray-500">No records found.</p>
                 )}
