@@ -246,7 +246,7 @@ const DashboardPage = () => {
                   </div>
 
                   <div>
-                    <GenderSelector />
+                    <GenderSelector value={''}/>
                   </div>
 
                   <div className="form-control validator w-full max-w-sm">

@@ -165,7 +165,7 @@ const RecordCard = ({record, onDelete, onStatusChange, onSavedEdit}) => {
                   </div>
 
                   <div className='w-96'>
-                    <GenderSelector />
+                    <GenderSelector value={record.gender}/>
                   </div>
 
                   <div className="form-control w-96">
