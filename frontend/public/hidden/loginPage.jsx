@@ -1,6 +1,6 @@
 import React from 'react'
 import toast from 'react-hot-toast'
-import Navbar from '../components/navbar'
+import Navbar from '../../src/components/navbar'
 import { useNavigate } from 'react-router'
 
 const LoginPage = () => {
