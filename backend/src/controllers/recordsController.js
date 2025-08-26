@@ -41,6 +41,10 @@ export async function getManagerNames(_, res) {
  
 export async function createRecord(req, res) {
     try {
+        if (Array.isArray(req.body)) {
+            const docs = await Record.create(req.body);
+            return res.status(201).json({ count: docs.length, records: docs });
+        }
 
         const {empCode, name, email, phone, gender, dob, address, department, role, manager, status, isManager} = req.body;
         const newRecord = new Record({empCode, name, email, phone, gender, dob, address, department, role, manager, status, isManager})
