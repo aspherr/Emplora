@@ -23,7 +23,6 @@ const DashboardPage = () => {
         const res = await axios.get("http://localhost:3000/api/records");
         setRecords(res.data);
         setIsRateLimited(false);
-        setFetched(true);
   
       } catch (error) {
         console.error("Error fetching records: ", error);
